@@ -1,13 +1,17 @@
 import sqlite3
 
-def create_tables(db_file):
-    # Connect to the SQLite database (creates it if it doesn't exist)
-    conn = sqlite3.connect(db_file)
+def create_tables(db_file: str):
+    """
+    This function is used to create the database which will be used for the migration.
 
-    # Creates a cursor object to execute SQL commands
-    cursor = conn.cursor()
+    Args:
+        db_file (str): Name of the database file.
 
-    # Defines the SQL statement to create HIRED_EMPLOYEES table
+    Returns:
+        str: Successful message if everything OK.
+    """
+
+    # SQL statement to create HIRED_EMPLOYEES table
     create_hired_employees_sql_table = """
     CREATE TABLE IF NOT EXISTS HIRED_EMPLOYEES (
         Id INTEGER PRIMARY KEY,
@@ -18,7 +22,7 @@ def create_tables(db_file):
     )
     """
 
-    # Defines the SQL statement to create DEPARTMENTS table
+    # SQL statement to create DEPARTMENTS table
     create_departments_sql_table = """
     CREATE TABLE IF NOT EXISTS DEPARTMENTS (
         Id INTEGER PRIMARY KEY,
@@ -26,7 +30,7 @@ def create_tables(db_file):
     )
     """
 
-    # Defines the SQL statement to create JOBS table
+    # SQL statement to create JOBS table
     create_jobs_sql_table = """
     CREATE TABLE IF NOT EXISTS JOBS (
         Id INTEGER PRIMARY KEY,
@@ -34,7 +38,9 @@ def create_tables(db_file):
     )
     """
 
-    # Executes the SQL statements to create the tables
+    # Connect to the SQLite database and execute the SQL statements via a cursor
+    conn = sqlite3.connect(db_file)
+    cursor = conn.cursor()
     cursor.execute(create_hired_employees_sql_table)
     cursor.execute(create_departments_sql_table)
     cursor.execute(create_jobs_sql_table)
