@@ -35,7 +35,7 @@ async def get_data(file_id: str):
         404 Not Found: If file_id is not valid
     """
     try:
-        df = pd.read_csv(f'{file_id}.csv', header=None, dtype="string")
+        df = pd.read_csv(f'Data/{file_id}.csv', header=None, dtype="string")
         data = df.to_dict(orient='records')
 
         return {"data": data}
@@ -65,7 +65,7 @@ async def upload_data(file_id: str, skip: int = 0):
         409 Conflict: If rows were already inserted into the table.
     """
     try:
-        df = pd.read_csv(f'{file_id}.csv', header=None, dtype="string")
+        df = pd.read_csv(f'Data/{file_id}.csv', header=None, dtype="string")
         df.columns = COLUMN_NAMES[file_id]
 
         with sqlite3.connect(DATABASE_NAME) as conn:
@@ -104,7 +104,7 @@ async def query(query_id: str):
     """
     try:
         with sqlite3.connect(DATABASE_NAME) as conn:
-            file = open(f'{query_id}.sql', 'r')
+            file = open(f'Queries/{query_id}.sql', 'r')
             conn = sqlite3.connect(DATABASE_NAME)
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
